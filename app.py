@@ -15,9 +15,17 @@ def read_file(filename='file1.txt', start=None, end=None):
 def hello_world():
     args = request.args
     if not list(args.values()):
-        return render_template('template.html', contents=read_file())
+        return render_template('template.html', contents=read_file()), 200
+    if args.get('start').isalpha() or args.get('end').isalpha():
+        return render_template('page_interval_error_3.html', start=args.get('start'), end=args.get('end')), 500
+
     start_param, end_param = int(args.get('start', None)), int(args.get('end', None))
-    return render_template('template.html', contents=read_file(start=start_param, end=end_param))
+    if start_param > end_param:
+        return render_template('page_interval_error.html', start=start_param, end=end_param), 500
+    if start_param == end_param:
+        return render_template('page_interval_error_2.html', start=start_param, end=end_param), 500
+
+    return render_template('template.html', contents=read_file(start=start_param, end=end_param)), 200
 
 
 if __name__ == '__main__':
