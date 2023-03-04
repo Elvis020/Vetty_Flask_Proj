@@ -3,8 +3,8 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 
-def read_file(filename='file1.txt', start=None, end=None):
-    with open(filename, 'r') as f:
+def read_file(filename='file4.txt', start=None, end=None):
+    with open(filename, 'r', encoding="utf16") as f:
         contents = f.readlines()
     if start and end is not None:
         return '\n'.join(map(lambda x: x.rstrip(), contents[start:end]))
